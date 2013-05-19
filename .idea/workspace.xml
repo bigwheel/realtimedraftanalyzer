@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="76bb12f5-9518-41b2-830e-d0438a836074" name="Default" comment="ピック譜のエミュレーションを修正中">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala" />
     </list>
     <ignored path="realtimedraftanalyzer.iws" />
@@ -9,7 +10,8 @@
     <file path="/Dummy.txt" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368979640520" ignored="false" />
     <file path="/AppSpec.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368974426255" ignored="false" />
     <file path="/fragment.java" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368973046748" ignored="false" />
-    <file path="/FileChangeSimulator.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368980529204" ignored="false" />
+    <file path="/FileChangeSimulator.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368980812029" ignored="false" />
+    <file path="/App.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368981974599" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,10 +72,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="App.scala" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="App.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="7" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0">
+            <state line="15" column="5" selection-start="332" selection-end="332" vertical-scroll-proportion="0.3419453">
               <folding />
             </state>
           </provider>
@@ -88,10 +90,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileChangeSimulator.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="FileChangeSimulator.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.36474165">
+            <state line="14" column="23" selection-start="526" selection-end="526" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -121,6 +123,7 @@
         <option value="$PROJECT_DIR$/project/plugins.sbt" />
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala" />
       </list>
     </option>
   </component>
@@ -357,7 +360,7 @@
       <recent name="com.herokuapp.mtgbase.realtimedraftanalyzer" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FileChangeSimulator">
+  <component name="RunManager" selected="Application.App">
     <configuration default="false" name="Hi" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="Hi" />
       <option name="VM_PARAMETERS" />
@@ -400,6 +403,22 @@
     </configuration>
     <configuration default="false" name="FileChangeSimulator" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.herokuapp.mtgbase.realtimedraftanalyzer.FileChangeSimulator" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="realtimedraftanalyzer" />
+      <envs />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="App" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.herokuapp.mtgbase.realtimedraftanalyzer.App" />
       <option name="VM_PARAMETERS" />
       <option name="PROGRAM_PARAMETERS" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -522,18 +541,20 @@
       <patterns />
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.Hi" />
       <item index="1" class="java.lang.String" itemvalue="Scala Console.Scala Console" />
       <item index="2" class="java.lang.String" itemvalue="Specs2.AppSpec" />
       <item index="3" class="java.lang.String" itemvalue="Application.FileChangeSimulator" />
+      <item index="4" class="java.lang.String" itemvalue="Application.App" />
     </list>
     <recent_temporary>
-      <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.FileChangeSimulator" />
-        <item index="1" class="java.lang.String" itemvalue="Specs2.AppSpec" />
-        <item index="2" class="java.lang.String" itemvalue="Scala Console.Scala Console" />
-        <item index="3" class="java.lang.String" itemvalue="Application.Hi" />
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Application.App" />
+        <item index="1" class="java.lang.String" itemvalue="Application.FileChangeSimulator" />
+        <item index="2" class="java.lang.String" itemvalue="Specs2.AppSpec" />
+        <item index="3" class="java.lang.String" itemvalue="Scala Console.Scala Console" />
+        <item index="4" class="java.lang.String" itemvalue="Application.Hi" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -578,7 +599,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -595,7 +616,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24958587" sideWeight="0.7263046" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2736954" sideWeight="0.4997239" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2736954" sideWeight="0.4997239" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -746,13 +767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="60" selection-end="60" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/sample-pick-score.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -776,7 +790,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.36474165">
+        <state line="14" column="23" selection-start="526" selection-end="526" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/App.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="5" selection-start="332" selection-end="332" vertical-scroll-proportion="0.3419453">
           <folding />
         </state>
       </provider>

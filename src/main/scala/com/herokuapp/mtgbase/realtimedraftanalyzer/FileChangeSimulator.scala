@@ -3,8 +3,8 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer
 import io.Source
 import java.io.{FileOutputStream, PrintWriter, File}
 
-object FileChangeSimulator {
-  def main(args: Array[String]) {
+object FileChangeSimulator extends Thread {
+  override def run() {
     val filename = "src/test/resources/test-target.txt"
     deleteFileIfExist(filename)
 
