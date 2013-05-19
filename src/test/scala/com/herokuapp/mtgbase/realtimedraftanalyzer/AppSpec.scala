@@ -1,6 +1,6 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
-import org
+import org.specs2.mutable._
 
 class AppSpec extends Specification {
 
