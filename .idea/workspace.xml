@@ -3,14 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="76bb12f5-9518-41b2-830e-d0438a836074" name="Default" comment="ピック譜のエミュレーションを修正中">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala" afterPath="$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/resources/sample-pick-score.txt" afterPath="$PROJECT_DIR$/src/test/resources/sample-pick-score.txt" />
     </list>
     <ignored path="realtimedraftanalyzer.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Dummy.txt" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368979640520" ignored="false" />
     <file path="/AppSpec.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368974426255" ignored="false" />
     <file path="/fragment.java" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368973046748" ignored="false" />
-    <file path="/FileChangeSimulator.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368979519606" ignored="false" />
+    <file path="/FileChangeSimulator.scala" changelist="76bb12f5-9518-41b2-830e-d0438a836074" time="1368980529204" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +91,7 @@
       <file leaf-file-name="FileChangeSimulator.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="6" selection-start="501" selection-end="501" vertical-scroll-proportion="0.3419453">
+            <state line="17" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.36474165">
               <folding />
             </state>
           </provider>
@@ -777,7 +776,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/com/herokuapp/mtgbase/realtimedraftanalyzer/FileChangeSimulator.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="6" selection-start="501" selection-end="501" vertical-scroll-proportion="0.3419453">
+        <state line="17" column="0" selection-start="559" selection-end="559" vertical-scroll-proportion="0.36474165">
           <folding />
         </state>
       </provider>

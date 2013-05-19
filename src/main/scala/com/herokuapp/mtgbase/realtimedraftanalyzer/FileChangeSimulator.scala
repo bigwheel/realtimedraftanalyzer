@@ -1,7 +1,7 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
 import io.Source
-import java.io.{PrintWriter, File}
+import java.io.{FileOutputStream, PrintWriter, File}
 
 object FileChangeSimulator {
   def main(args: Array[String]) {
@@ -10,11 +10,12 @@ object FileChangeSimulator {
 
     val samplePickScore = Source.fromFile("src/test/resources/sample-pick-score.txt")
     for (line <- samplePickScore.getLines()) {
-      val out = new PrintWriter(filename)
+      val out = new PrintWriter(new FileOutputStream(filename, true))
       println(line)
       out.println(line)
+      out.flush()
       out.close()
-      
+
       if (line.matches("\\s*"))
         Thread.sleep(1000)
     }
