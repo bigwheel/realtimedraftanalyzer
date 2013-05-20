@@ -11,7 +11,7 @@ object FileChangeSimulator extends Thread {
     val samplePickScore = Source.fromFile("src/test/resources/sample-pick-score.txt")
     for (line <- samplePickScore.getLines()) {
       val out = new PrintWriter(new FileOutputStream(filename, true))
-      println(line)
+      //println(line)
       out.println(line)
       out.flush()
       out.close()
