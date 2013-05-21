@@ -1,2 +1,4 @@
 target/
 src/test/resources/test-target.txt
+/.idea/
+/.idea_modules/
