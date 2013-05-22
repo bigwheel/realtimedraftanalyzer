@@ -12,9 +12,10 @@ class DraftScoreSpec extends Specification {
     }
   }
 
+  /*
   "DraftScore's text" should {
     "be String" in {
       obj.text must beAnInstanceOf[String]
     }
-  }
+  }*/
 }
