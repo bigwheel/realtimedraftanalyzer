@@ -6,9 +6,14 @@ import java.util.Locale
 
 class DraftScore(path: String) {
   private[this] val it = Source.fromFile(path).getLines // itってミュータブルなんやね
+
   private[this] val eventNumber = """Event #: (\d+)""".r.
       findFirstMatchIn(it.next).get.group(1).toInt
   private[this] val date = new SimpleDateFormat(
     "'Time:    'MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH).parse(it.next)
-  println(date)
+
+  if (it.next == "Players: ") {
+
+  } else
+    throw new IllegalArgumentException("入力されたテキストファイルのフォーマットが不正です")
 }
