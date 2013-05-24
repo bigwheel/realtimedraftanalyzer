@@ -36,6 +36,12 @@ class DraftScoreSpec extends Specification {
     }
   }
 
+  "DraftScore#firstPack#expansion" should {
+    "be match with that in source file" in {
+      obj.firstPack.expansion must_== "RTR"
+    }
+  }
+
   /*
   "DraftScore's text" should {
     "be String" in {
