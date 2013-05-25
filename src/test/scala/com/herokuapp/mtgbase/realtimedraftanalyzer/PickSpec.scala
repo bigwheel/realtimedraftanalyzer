@@ -47,3 +47,15 @@ class PickSpec extends Specification {
     )) must throwAn[Exception]
   }
 }
+
+class PicksOfAPackSpec extends Specification {
+  def createDummyCardList(cardNumber: Int): List[Card] = {
+    List(Card("適当なカード名", picked = true))
+  }
+
+  "accept valid Pick List" in {
+    PicksOfAPack("適当なエキスパンション名", List(
+      Pick(1, 1, createDummyCardList(15))
+    )) must not be throwAn[Exception]
+  }
+}
