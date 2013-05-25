@@ -65,28 +65,43 @@ class PicksOfAPackSpec extends Specification {
   }
 
   "accept valid Pick List" in {
-    def Z[A,B](f:(A=>B)=>(A=>B)):A=>B = (x:A) => f(Z(f))(x)
-    val l = Z( (f: Int => List[Pick]) => (pickNumber: Int) => pickNumber match {
-      case pickNumber if 15 < pickNumber => List.empty[Pick]
-      case pickNumber => {
-        Pick(1, pickNumber, createDummyCardList(16 - pickNumber))::f(pickNumber + 1)
-      }
-    })(1)
-    PicksOfAPack("適当なエキスパンション名", l) must not be throwAn[Exception]
+    PicksOfAPack("適当なエキスパンション名", List(
+      Pick(1, 1, createDummyCardList(15)), Pick(1, 2, createDummyCardList(14)),
+      Pick(1, 3, createDummyCardList(13)), Pick(1, 4, createDummyCardList(12)),
+      Pick(1, 5, createDummyCardList(11)), Pick(1, 6, createDummyCardList(10)),
+      Pick(1, 7, createDummyCardList(9)), Pick(1, 8, createDummyCardList(8)),
+      Pick(1, 9, createDummyCardList(7)), Pick(1, 10, createDummyCardList(6)),
+      Pick(1, 11, createDummyCardList(5)), Pick(1, 12, createDummyCardList(4)),
+      Pick(1, 13, createDummyCardList(3)), Pick(1, 14, createDummyCardList(2)),
+      Pick(1, 15, createDummyCardList(1))
+    )) must not be throwAn[Exception]
   }
 
   "not accept" in {
     "if every Pick packNumbers is not same" in {
       PicksOfAPack("適当なエキスパンション名", List(
-        Pick(1, 14, createDummyCardList(2)),
-        Pick(2, 15, createDummyCardList(1))
+        Pick(1, 1, createDummyCardList(15)),
+        Pick(/* dont same */2, 2, createDummyCardList(14)),
+        Pick(1, 3, createDummyCardList(13)), Pick(1, 4, createDummyCardList(12)),
+        Pick(1, 5, createDummyCardList(11)), Pick(1, 6, createDummyCardList(10)),
+        Pick(1, 7, createDummyCardList(9)), Pick(1, 8, createDummyCardList(8)),
+        Pick(1, 9, createDummyCardList(7)), Pick(1, 10, createDummyCardList(6)),
+        Pick(1, 11, createDummyCardList(5)), Pick(1, 12, createDummyCardList(4)),
+        Pick(1, 13, createDummyCardList(3)), Pick(1, 14, createDummyCardList(2)),
+        Pick(1, 15, createDummyCardList(1))
       )) must throwAn[Exception]
     }
 
     "if pickNumbers are not contiguous" in {
       PicksOfAPack("適当なエキスパンション名", List(
-        Pick(1, 1, createDummyCardList(15)),
-        Pick(1, 3, createDummyCardList(13))
+        Pick(1, 1, createDummyCardList(15)), /*Pick(2, 2, createDummyCardList(14)),*/
+        Pick(1, 3, createDummyCardList(13)), Pick(1, 4, createDummyCardList(12)),
+        Pick(1, 5, createDummyCardList(11)), Pick(1, 6, createDummyCardList(10)),
+        Pick(1, 7, createDummyCardList(9)), Pick(1, 8, createDummyCardList(8)),
+        Pick(1, 9, createDummyCardList(7)), Pick(1, 10, createDummyCardList(6)),
+        Pick(1, 11, createDummyCardList(5)), Pick(1, 12, createDummyCardList(4)),
+        Pick(1, 13, createDummyCardList(3)), Pick(1, 14, createDummyCardList(2)),
+        Pick(1, 15, createDummyCardList(1))
       )) must throwAn[Exception]
     }
   }
