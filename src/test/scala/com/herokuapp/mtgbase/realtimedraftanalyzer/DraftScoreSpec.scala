@@ -53,7 +53,7 @@ class DraftScoreSpec extends Specification {
           Card("Aquus Steed"),
           Card("Archweaver"),
           Card("Rix Maadi Guildmage"),
-          Card("Righteous Authority", true),
+          Card("Righteous Authority", picked = true),
           Card("Swamp"))
         )
       }
