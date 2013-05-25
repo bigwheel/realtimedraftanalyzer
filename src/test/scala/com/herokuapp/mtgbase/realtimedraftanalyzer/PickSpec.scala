@@ -20,7 +20,7 @@ class PickSpec extends Specification {
       Card("Rix Maadi Guildmage", picked = true),
       Card("Righteous Authority", picked = true),
       Card("Swamp")
-    )) must throwAn[IllegalArgumentException]
+    )) must throwAn[IllegalArgumentException](message = "pickされたカードが１枚ではありません")
   }
 
   "not accept picked flag nothing" in {
@@ -30,14 +30,14 @@ class PickSpec extends Specification {
       Card("Rix Maadi Guildmage"),
       Card("Righteous Authority"),
       Card("Swamp")
-    )) must throwAn[IllegalArgumentException]
+    )) must throwAn[IllegalArgumentException](message = "pickされたカードが１枚ではありません")
   }
 
   "not accept less than 1 as packNumber" in {
     Pick(0, 14, List(
       Card("Drainpipe Vermin"),
       Card("Righteous Authority", picked = true)
-    )) must throwAn[Exception]
+    )) must throwAn[IllegalArgumentException](message = """packNumberが1未満\(0\)です""")
   }
 
   "have just card number depend on pickNumber" in {
@@ -51,7 +51,8 @@ class PickSpec extends Specification {
     "dont accept case" in {
       Pick(1, 14, List(
         Card("Righteous Authority", picked = true)
-      )) must throwAn[Exception]
+      )) must throwAn[Exception](message = "pickNumberとカードの枚数が矛盾します " +
+        "pickNumber:14 カードの枚数:1")
     }
   }
 }
@@ -89,7 +90,7 @@ class PicksOfAPackSpec extends Specification {
         Pick(1, 11, dummyCardList(5)), Pick(1, 12, dummyCardList(4)),
         Pick(1, 13, dummyCardList(3)), Pick(1, 14, dummyCardList(2)),
         Pick(1, 15, dummyCardList(1))
-      )) must throwAn[Exception]
+      )) must throwAn[IllegalArgumentException](message = "packNumberの値がすべて同じではありません")
     }
 
     "if pickNumbers are not contiguous" in {
@@ -102,7 +103,7 @@ class PicksOfAPackSpec extends Specification {
         Pick(1, 11, dummyCardList(5)), Pick(1, 12, dummyCardList(4)),
         Pick(1, 13, dummyCardList(3)), Pick(1, 14, dummyCardList(2)),
         Pick(1, 15, dummyCardList(1))
-      )) must throwAn[Exception]
+      )) must throwAn[IllegalArgumentException](message = "pickNumberが1~15の連続ではありません")
     }
 
     "if pickNumbers are not contiguous" in {
@@ -115,7 +116,7 @@ class PicksOfAPackSpec extends Specification {
         Pick(1, 11, dummyCardList(5)), Pick(1, 12, dummyCardList(4)),
         Pick(1, 13, dummyCardList(3)), Pick(1, 14, dummyCardList(2))/*,
         Pick(1, 15, dummyCardList(1))*/
-      )) must throwAn[Exception]
+      )) must throwAn[IllegalArgumentException](message = "pickNumberが1~15の連続ではありません")
     }
 
     "if pickNumbers are not contiguous" in {
@@ -128,7 +129,7 @@ class PicksOfAPackSpec extends Specification {
         Pick(1, 11, dummyCardList(5)), Pick(1, 12, dummyCardList(4)),
         Pick(1, 13, dummyCardList(3)), Pick(1, 14, dummyCardList(2)),
         Pick(1, 15, dummyCardList(1))
-      )) must throwAn[Exception]
+      )) must throwAn[IllegalArgumentException](message = "pickNumberが1~15の連続ではありません")
     }
   }
 }
