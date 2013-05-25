@@ -43,8 +43,6 @@ class DraftScore(path: String) {
   } else
     throwIAE()
 
-  private[this] val boosterPackName = getFirstParam("^------ (.+) ------$", it.next)
-  it.next // 空行を読み捨て
   private[this] def parseAPick(it: Iterator[String]): Pick = {
     val g = getParam("""^Pack (\d+) pick (\d+):""", it.next)
     val (packNumber, pickNumber) = (g.group(1).toInt, g.group(2).toInt)
@@ -62,7 +60,10 @@ class DraftScore(path: String) {
     Pick(packNumber, pickNumber, parseCards(it))
   }
 
-  private[this] val picklist = (1 to 15).map(_ => parseAPick(it)).toList
-  val firstPack = PicksOfAPack(boosterPackName, picklist)
-  println(firstPack)
+  val packs = (1 to 3).map(_ => {
+    val boosterPackName = getFirstParam("^------ (.+) ------$", it.next)
+    it.next // 空行を読み捨て
+    PicksOfAPack(boosterPackName, (1 to 15).map(_ => parseAPick(it)).toList)
+  })
+  println(packs(0))
 }

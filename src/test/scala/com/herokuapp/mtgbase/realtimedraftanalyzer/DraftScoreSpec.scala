@@ -33,13 +33,13 @@ class DraftScoreSpec extends Specification {
       }
     }
 
-    "#firstPack" in {
+    "#packs(0)" in {
       "#expansion be match with that in source file" in {
-        obj.firstPack.expansion must_== "RTR"
+        obj.packs(0).expansion must_== "RTR"
       }
 
       "#picks(0) be match with that in source file" in {
-        obj.firstPack.picks(0) must_== Pick(1, 1, List(
+        obj.packs(0).picks(0) must_== Pick(1, 1, List(
           Card("Drainpipe Vermin"), Card("Giant Growth"),
           Card("Crosstown Courier"), Card("Rubbleback Rhino"),
           Card("Azorius Arrester"), Card("Explosive Impact"),
@@ -51,8 +51,16 @@ class DraftScoreSpec extends Specification {
       }
 
       "#picks(14) be match with that in source file" in {
-        obj.firstPack.picks(14) must_== Pick(1, 15, List(
+        obj.packs(0).picks(14) must_== Pick(1, 15, List(
           Card("Mountain", picked = true)
+        ))
+      }
+    }
+
+    "#packs(2)" in {
+      "#picks(14) be match with that in source file" in {
+        obj.packs(2).picks(14) must_== Pick(3, 15, List(
+          Card("Forest", picked = true)
         ))
       }
     }
