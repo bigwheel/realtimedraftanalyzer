@@ -34,10 +34,28 @@ class DraftScoreSpec extends Specification {
     }
 
     "#firstPack" in {
-      "#expansion" in {
-        "be match with that in source file" in {
-          obj.firstPack.expansion must_== "RTR"
-        }
+      "#expansion be match with that in source file" in {
+        obj.firstPack.expansion must_== "RTR"
+      }
+
+      "#picks(0) be match with that in source file" in {
+        obj.firstPack.picks(0) must_== Pick(List(
+          Card("Drainpipe Vermin"),
+          Card("Giant Growth"),
+          Card("Crosstown Courier"),
+          Card("Rubbleback Rhino"),
+          Card("Azorius Arrester"),
+          Card("Explosive Impact"),
+          Card("Mind Rot"),
+          Card("Axebane Guardian"),
+          Card("Cobblebrute"),
+          Card("Hussar Patrol"),
+          Card("Aquus Steed"),
+          Card("Archweaver"),
+          Card("Rix Maadi Guildmage"),
+          Card("Righteous Authority", true),
+          Card("Swamp"))
+        )
       }
     }
   }

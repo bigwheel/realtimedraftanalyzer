@@ -5,7 +5,13 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import scala.util.matching.Regex.Match
 
-case class Pick(picked: Int, cards: Array[String])
+case class Card(name: String, picked: Boolean = false)
+case class Pick(cards: List[Card] = List.empty[Card]) {
+  // ここに引数をとって、このオブジェクトが不正な状態にならないかのチェックコード（そして例外raiseコード)を書く
+  def +(card: Card): Pick = {
+    Pick(card::this.cards)
+  }
+}
 case class PicksOfAPack(expansion: String, picks: List[Pick])
 
 class DraftScore(path: String) {
@@ -47,7 +53,23 @@ class DraftScore(path: String) {
     throwIAE()
 
   private[this] val boosterPackName = getFirstParam("^------ (.+) ------$", it.next)
-  val firstPack = PicksOfAPack(boosterPackName, List.empty[Pick])
   it.next // 空行を読み捨て
   val g = getParam("""^Pack (\d+) pick (\d+):""", it.next)
+  private[this] val (packNumber, pickNumber) = (g.group(1).toInt, g.group(2).toInt)
+  if (packNumber != 1)
+    throwIAE("pack番号が矛盾します。期待:1 実際:" + packNumber)
+  if (pickNumber != 1)
+    throwIAE("pick番号が矛盾します。期待:1 実際:" + pickNumber)
+
+  def parseCards(it: Iterator[String]): Pick = {
+    val picked_card = "^--> (.+)$".r
+    val other_card = "^    (.+)$".r
+    it.next match {
+      case picked_card(card_name) => parseCards(it) + Card(card_name, true)
+      case other_card(card_name) => parseCards(it) + Card(card_name, false)
+      case " " => Pick()
+      case other => throwIAE(other)
+    }
+  }
+  val firstPack = PicksOfAPack(boosterPackName, List(parseCards(it)))
 }
