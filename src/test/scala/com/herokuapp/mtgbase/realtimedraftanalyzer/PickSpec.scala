@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 
 class PickSpec extends Specification {
   "accept a valid cardlist" in {
-    Pick(1, 1, List(
+    Pick(1, 11, List(
       Card("Drainpipe Vermin"),
       Card("Giant Growth"),
       Card("Rix Maadi Guildmage"),
@@ -14,7 +14,7 @@ class PickSpec extends Specification {
   }
 
   "not accept more than one picked flag" in {
-    Pick(1, 1, List(
+    Pick(1, 11, List(
       Card("Drainpipe Vermin"),
       Card("Giant Growth"),
       Card("Rix Maadi Guildmage", picked = true),
@@ -24,7 +24,7 @@ class PickSpec extends Specification {
   }
 
   "not accept picked flag nothing" in {
-    Pick(1, 1, List(
+    Pick(1, 11, List(
       Card("Drainpipe Vermin"),
       Card("Giant Growth"),
       Card("Rix Maadi Guildmage"),
@@ -34,17 +34,25 @@ class PickSpec extends Specification {
   }
 
   "not accept less than 1 as packNumber" in {
-    Pick(0, 1, List(
+    Pick(0, 14, List(
       Card("Drainpipe Vermin"),
       Card("Righteous Authority", picked = true)
     )) must throwAn[Exception]
   }
 
-  "not accept less than 1 as pickNumber" in {
-    Pick(1, 0, List(
-      Card("Drainpipe Vermin"),
-      Card("Righteous Authority", picked = true)
-    )) must throwAn[Exception]
+  "have just card number depend on pickNumber" in {
+    "accept case" in {
+      Pick(1, 14, List(
+        Card("Drainpipe Vermin"),
+        Card("Righteous Authority", picked = true)
+      )) must not be throwAn[Exception]
+    }
+
+    "dont accept case" in {
+      Pick(1, 14, List(
+        Card("Righteous Authority", picked = true)
+      )) must throwAn[Exception]
+    }
   }
 }
 
