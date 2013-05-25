@@ -5,15 +5,6 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import scala.util.matching.Regex.Match
 
-case class Card(name: String, picked: Boolean = false)
-case class Pick(cards: List[Card] = List.empty[Card]) {
-  // ここに引数をとって、このオブジェクトが不正な状態にならないかのチェックコード（そして例外raiseコード)を書く
-  def +(card: Card): Pick = {
-    Pick(card::this.cards)
-  }
-}
-case class PicksOfAPack(expansion: String, picks: List[Pick])
-
 class DraftScore(path: String) {
   private[this] def throwIAE(line: String = "") = {
     throw new IllegalArgumentException("入力されたテキストファイルのフォーマットが不正です:" + line)
