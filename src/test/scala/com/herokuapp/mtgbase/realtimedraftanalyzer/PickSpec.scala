@@ -58,12 +58,32 @@ class PickSpec extends Specification {
 
 class PicksOfAPackSpec extends Specification {
   def createDummyCardList(cardNumber: Int): List[Card] = {
-    List(Card("適当なカード名", picked = true))
+    cardNumber match {
+      case 1 => List(Card("適当なカード名", picked = true))
+      case _ => Card("適当なカード名")::createDummyCardList(cardNumber - 1)
+    }
   }
 
   "accept valid Pick List" in {
     PicksOfAPack("適当なエキスパンション名", List(
-      Pick(1, 1, createDummyCardList(15))
+      Pick(1, 14, createDummyCardList(2)),
+      Pick(1, 15, createDummyCardList(1))
     )) must not be throwAn[Exception]
+  }
+
+  "not accept" in {
+    "if every Pick packNumbers is not same" in {
+      PicksOfAPack("適当なエキスパンション名", List(
+        Pick(1, 14, createDummyCardList(2)),
+        Pick(2, 15, createDummyCardList(1))
+      )) must throwAn[Exception]
+    }
+
+    "if pickNumbers are not contiguous" in {
+      PicksOfAPack("適当なエキスパンション名", List(
+        Pick(1, 1, createDummyCardList(15)),
+        Pick(1, 3, createDummyCardList(13))
+      )) must throwAn[Exception]
+    }
   }
 }

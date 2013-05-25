@@ -13,5 +13,6 @@ case class Pick(packNumber: Int, pickNumber: Int, cards: List[Card]) {
 }
 
 case class PicksOfAPack(expansion: String, picks: List[Pick]) {
-  // ここでpick中にカードの枚数が増えたりしてないかチェック
+  if (picks.groupBy(_.packNumber).size != 1)
+    throw new IllegalArgumentException("packNumberの値がすべて同じではありません")
 }
