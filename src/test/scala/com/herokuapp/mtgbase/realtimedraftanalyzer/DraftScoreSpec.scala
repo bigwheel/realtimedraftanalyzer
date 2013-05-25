@@ -39,7 +39,7 @@ class DraftScoreSpec extends Specification {
       }
 
       "#picks(0) be match with that in source file" in {
-        obj.firstPack.picks(0) must_== Pick(List(
+        obj.firstPack.picks(0) must_== Pick(1, 1, List(
           Card("Drainpipe Vermin"),
           Card("Giant Growth"),
           Card("Crosstown Courier"),

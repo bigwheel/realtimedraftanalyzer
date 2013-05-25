@@ -48,10 +48,10 @@ class DraftScore(path: String) {
   private[this] def methodA(it: Iterator[String]): Pick = {
     val g = getParam("""^Pack (\d+) pick (\d+):""", it.next)
     val (packNumber, pickNumber) = (g.group(1).toInt, g.group(2).toInt)
-    if (packNumber != 1)
-      throwIAE("pack番号が矛盾します。期待:1 実際:" + packNumber)
-    if (pickNumber != 1)
-      throwIAE("pick番号が矛盾します。期待:1 実際:" + pickNumber)
+    //if (packNumber != 1)
+    //  throwIAE("pack番号が矛盾します。期待:1 実際:" + packNumber)
+    //if (pickNumber != 1)
+    //  throwIAE("pick番号が矛盾します。期待:1 実際:" + pickNumber)
 
     def parseCards(it: Iterator[String]): List[Card] = {
       val picked_card = "^--> (.+)$".r
@@ -63,7 +63,7 @@ class DraftScore(path: String) {
         case other => throwIAE(other)
       }
     }
-    Pick(parseCards(it))
+    Pick(packNumber, pickNumber, parseCards(it))
   }
 
   val firstPack = PicksOfAPack(boosterPackName, List(methodA(it), methodA(it)))
