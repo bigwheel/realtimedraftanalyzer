@@ -13,7 +13,7 @@ class PickSpec extends Specification {
     )) must not be throwAn[Exception]
   }
 
-  "not accept a invalid cardlist that have more than one picked flag" in {
+  "not accept more than one picked flag" in {
     Pick(List(
       Card("Drainpipe Vermin"),
       Card("Giant Growth"),
@@ -23,7 +23,7 @@ class PickSpec extends Specification {
     )) must throwAn[IllegalArgumentException]
   }
 
-  "not accept a invalid cardlist that dont have a picked flag" in {
+  "not accept picked flag nothing" in {
     Pick(List(
       Card("Drainpipe Vermin"),
       Card("Giant Growth"),
