@@ -65,10 +65,14 @@ class PicksOfAPackSpec extends Specification {
   }
 
   "accept valid Pick List" in {
-    PicksOfAPack("適当なエキスパンション名", List(
-      Pick(1, 14, createDummyCardList(2)),
-      Pick(1, 15, createDummyCardList(1))
-    )) must not be throwAn[Exception]
+    def Z[A,B](f:(A=>B)=>(A=>B)):A=>B = (x:A) => f(Z(f))(x)
+    val l = Z( (f: Int => List[Pick]) => (pickNumber: Int) => pickNumber match {
+      case pickNumber if 15 < pickNumber => List.empty[Pick]
+      case pickNumber => {
+        Pick(1, pickNumber, createDummyCardList(16 - pickNumber))::f(pickNumber + 1)
+      }
+    })(1)
+    PicksOfAPack("適当なエキスパンション名", l) must not be throwAn[Exception]
   }
 
   "not accept" in {
