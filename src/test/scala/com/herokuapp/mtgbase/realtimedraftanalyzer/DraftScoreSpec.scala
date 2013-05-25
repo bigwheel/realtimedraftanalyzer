@@ -49,6 +49,12 @@ class DraftScoreSpec extends Specification {
           Card("Righteous Authority", picked = true), Card("Swamp"))
         )
       }
+
+      "#picks(14) be match with that in source file" in {
+        obj.firstPack.picks(14) must_== Pick(1, 15, List(
+          Card("Mountain", picked = true)
+        ))
+      }
     }
   }
 }
