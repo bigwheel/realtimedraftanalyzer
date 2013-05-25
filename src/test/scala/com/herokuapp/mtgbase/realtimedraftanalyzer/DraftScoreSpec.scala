@@ -40,21 +40,13 @@ class DraftScoreSpec extends Specification {
 
       "#picks(0) be match with that in source file" in {
         obj.firstPack.picks(0) must_== Pick(1, 1, List(
-          Card("Drainpipe Vermin"),
-          Card("Giant Growth"),
-          Card("Crosstown Courier"),
-          Card("Rubbleback Rhino"),
-          Card("Azorius Arrester"),
-          Card("Explosive Impact"),
-          Card("Mind Rot"),
-          Card("Axebane Guardian"),
-          Card("Cobblebrute"),
-          Card("Hussar Patrol"),
-          Card("Aquus Steed"),
-          Card("Archweaver"),
+          Card("Drainpipe Vermin"), Card("Giant Growth"),
+          Card("Crosstown Courier"), Card("Rubbleback Rhino"),
+          Card("Azorius Arrester"), Card("Explosive Impact"),
+          Card("Mind Rot"), Card("Axebane Guardian"), Card("Cobblebrute"),
+          Card("Hussar Patrol"), Card("Aquus Steed"), Card("Archweaver"),
           Card("Rix Maadi Guildmage"),
-          Card("Righteous Authority", picked = true),
-          Card("Swamp"))
+          Card("Righteous Authority", picked = true), Card("Swamp"))
         )
       }
     }
