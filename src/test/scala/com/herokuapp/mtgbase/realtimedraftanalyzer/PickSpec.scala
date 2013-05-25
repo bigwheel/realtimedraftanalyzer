@@ -32,4 +32,18 @@ class PickSpec extends Specification {
       Card("Swamp")
     )) must throwAn[IllegalArgumentException]
   }
+
+  "not accept less than 1 as packNumber" in {
+    Pick(0, 1, List(
+      Card("Drainpipe Vermin"),
+      Card("Righteous Authority", picked = true)
+    )) must throwAn[Exception]
+  }
+
+  "not accept less than 1 as pickNumber" in {
+    Pick(1, 0, List(
+      Card("Drainpipe Vermin"),
+      Card("Righteous Authority", picked = true)
+    )) must throwAn[Exception]
+  }
 }
