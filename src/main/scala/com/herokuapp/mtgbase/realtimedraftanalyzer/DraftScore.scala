@@ -52,15 +52,15 @@ class DraftScore(path: String) {
   if (pickNumber != 1)
     throwIAE("pick番号が矛盾します。期待:1 実際:" + pickNumber)
 
-  def parseCards(it: Iterator[String]): Pick = {
+  def parseCards(it: Iterator[String]): List[Card] = {
     val picked_card = "^--> (.+)$".r
     val other_card = "^    (.+)$".r
     it.next match {
-      case picked_card(card_name) => parseCards(it) + Card(card_name, true)
-      case other_card(card_name) => parseCards(it) + Card(card_name, false)
-      case " " => Pick()
+      case picked_card(card_name) => Card(card_name, true)::parseCards(it)
+      case other_card(card_name) => Card(card_name, false)::parseCards(it)
+      case " " => List.empty[Card]
       case other => throwIAE(other)
     }
   }
-  val firstPack = PicksOfAPack(boosterPackName, List(parseCards(it)))
+  val firstPack = PicksOfAPack(boosterPackName, List(Pick(parseCards(it))))
 }
