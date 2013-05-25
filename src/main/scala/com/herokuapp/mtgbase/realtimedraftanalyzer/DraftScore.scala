@@ -48,10 +48,6 @@ class DraftScore(path: String) {
   private[this] def parseAPick(it: Iterator[String]): Pick = {
     val g = getParam("""^Pack (\d+) pick (\d+):""", it.next)
     val (packNumber, pickNumber) = (g.group(1).toInt, g.group(2).toInt)
-    //if (packNumber != 1)
-    //  throwIAE("pack番号が矛盾します。期待:1 実際:" + packNumber)
-    //if (pickNumber != 1)
-    //  throwIAE("pick番号が矛盾します。期待:1 実際:" + pickNumber)
 
     def parseCards(it: Iterator[String]): List[Card] = {
       val picked_card = "^--> (.+)$".r
