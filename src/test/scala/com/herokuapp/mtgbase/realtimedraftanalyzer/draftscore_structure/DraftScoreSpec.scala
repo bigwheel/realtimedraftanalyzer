@@ -1,7 +1,8 @@
-package com.herokuapp.mtgbase.realtimedraftanalyzer
+package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 
 import org.specs2.mutable.Specification
 import java.util.Calendar
+import com.herokuapp.mtgbase.realtimedraftanalyzer.Players
 
 class DraftScoreSpec extends Specification {
   val obj = new DraftScore("src/test/resources/sample-pick-score.txt")

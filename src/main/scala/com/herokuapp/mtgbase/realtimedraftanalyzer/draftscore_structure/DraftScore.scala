@@ -1,15 +1,14 @@
-package com.herokuapp.mtgbase.realtimedraftanalyzer
+package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 
 import scala.io.Source
 import java.text.SimpleDateFormat
 import java.util.Locale
 import scala.util.matching.Regex.Match
+import com.herokuapp.mtgbase.realtimedraftanalyzer.Players
 
 /**
  * ドラフトピック譜を表現するクラスだが、リアルタイムでピック譜を扱いたい関係上
  * 記述中のピック譜も許容しなければいけない
- *
- * @param path
  */
 class DraftScore(path: String) {
   private[this] def throwIAE(line: String = "") = {

@@ -1,6 +1,4 @@
-package com.herokuapp.mtgbase.realtimedraftanalyzer
-
-
+package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 
 case class Pick(packNumber: Int, pickNumber: Int, cards: List[Card]) {
   if (packNumber < 1)

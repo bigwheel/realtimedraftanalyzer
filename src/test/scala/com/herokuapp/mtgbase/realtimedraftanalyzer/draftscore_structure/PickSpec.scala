@@ -1,4 +1,4 @@
-package com.herokuapp.mtgbase.realtimedraftanalyzer
+package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 
 import org.specs2.mutable.Specification
 

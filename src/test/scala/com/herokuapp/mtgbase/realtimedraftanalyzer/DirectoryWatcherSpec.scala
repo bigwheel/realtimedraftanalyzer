@@ -2,6 +2,7 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer
 
 import java.nio.file.{StandardWatchEventKinds, Path, WatchEvent}
 import org.specs2.mutable.Specification
+import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.DraftScore
 
 class DirectoryWatcherSpec extends Specification {
   "FileChangeSimulator" should {
