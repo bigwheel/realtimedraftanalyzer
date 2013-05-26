@@ -3,23 +3,20 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer
 import io.Source
 import java.io.{FileOutputStream, PrintWriter, File}
 
-object FileChangeSimulator extends Thread {
+class FileChangeSimulator(source: String, dest: String) extends Thread {
   override def run() {
-    val filename = "src/test/resources/test-target.txt"
-    deleteFileIfExist(filename)
+    deleteFileIfExist(source)
 
-    val samplePickScore = Source.fromFile("src/test/resources/sample-pick-score.txt")
+    val samplePickScore = Source.fromFile(dest)
     for (line <- samplePickScore.getLines()) {
-      val out = new PrintWriter(new FileOutputStream(filename, true))
-      //println(line)
+      val out = new PrintWriter(new FileOutputStream(source, true))
       out.println(line)
-      out.flush()
       out.close()
 
       if (line.matches("\\s*"))
         Thread.sleep(1000)
     }
-    deleteFileIfExist(filename)
+    deleteFileIfExist(source)
   }
 
   def deleteFileIfExist(filename: String) {
