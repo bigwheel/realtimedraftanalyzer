@@ -4,7 +4,7 @@ import io.Source
 import java.io.{PrintWriter, File}
 import scala.actors.Actor
 
-class FileChangeSimulator(source: String, dest: String) {
+class FileChangeSimulator(source: String, dest: String, waitTime: Long) {
   Actor.actor {
     deleteFileIfExist(source)
 
@@ -15,7 +15,7 @@ class FileChangeSimulator(source: String, dest: String) {
 
       if (line.matches("\\s*")) {
         out.flush()
-        Thread.sleep(100)
+        Thread.sleep(waitTime)
       }
     }
     out.close()
