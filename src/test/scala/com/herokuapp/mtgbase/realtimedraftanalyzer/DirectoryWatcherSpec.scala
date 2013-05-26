@@ -11,7 +11,7 @@ class DirectoryWatcherSpec extends Specification {
   "FileChangeSimulator" should {
     "test" in {
       new FileChangeSimulator("src/test/resources/test-target.txt",
-        "src/test/resources/sample-pick-score.txt").start
+        "src/test/resources/sample-pick-score.txt").start()
 
       new DirectoryWatcher("src/test/resources/", eventHandler)
       success
