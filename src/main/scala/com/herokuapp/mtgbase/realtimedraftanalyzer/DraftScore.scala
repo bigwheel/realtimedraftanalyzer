@@ -5,6 +5,12 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import scala.util.matching.Regex.Match
 
+/**
+ * ドラフトピック譜を表現するクラスだが、リアルタイムでピック譜を扱いたい関係上
+ * 記述中のピック譜も許容しなければいけない
+ *
+ * @param path
+ */
 class DraftScore(path: String) {
   private[this] def throwIAE(line: String = "") = {
     throw new IllegalArgumentException("入力されたテキストファイルのフォーマットが不正です:" + line)

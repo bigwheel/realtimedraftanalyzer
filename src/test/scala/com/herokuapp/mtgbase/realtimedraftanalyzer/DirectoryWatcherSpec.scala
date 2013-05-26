@@ -1,20 +1,21 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
-import java.nio.file.{Path, WatchEvent}
+import java.nio.file.{StandardWatchEventKinds, Path, WatchEvent}
 import org.specs2.mutable.Specification
 
 class DirectoryWatcherSpec extends Specification {
-  def eventHandler(event: WatchEvent[Path], fullpath: Path) {
-    System.err.println("%s: %s\n".format(event.kind().name(), fullpath))
-  }
-
   "FileChangeSimulator" should {
     "test" in {
       new FileChangeSimulator("src/test/resources/test-target.txt",
         "src/test/resources/sample-pick-score.txt")
 
-      new DirectoryWatcher("src/test/resources/", eventHandler)
-      success
+      new DirectoryWatcher("src/test/resources/",
+        (event: WatchEvent[Path], fullpath: Path) => {
+          //System.err.println("%s: %s\n".format(event.kind.name, fullpath))
+          new DraftScore(fullpath.toString)
+          event.kind != StandardWatchEventKinds.ENTRY_DELETE
+        }
+      ) must not be throwA[Exception]
     }
   }
 }

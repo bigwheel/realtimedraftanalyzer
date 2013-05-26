@@ -15,7 +15,7 @@ class FileChangeSimulator(source: String, dest: String) {
 
       if (line.matches("\\s*")) {
         out.flush()
-        Thread.sleep(1000)
+        Thread.sleep(100)
       }
     }
     out.close()
