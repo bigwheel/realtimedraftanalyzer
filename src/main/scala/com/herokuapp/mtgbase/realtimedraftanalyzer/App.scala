@@ -26,8 +26,7 @@ object App {
         val event = tmp.asInstanceOf[WatchEvent[Path]]
         val kind = event.kind()
         if (kind != StandardWatchEventKinds.OVERFLOW) {
-          val ev = event.asInstanceOf[WatchEvent[Path]]
-          val name = ev.context()
+          val name = event.context()
           val child = dir.resolve(name)
           System.err.println("%s: %s\n".format(event.kind().name(), child))
         }
