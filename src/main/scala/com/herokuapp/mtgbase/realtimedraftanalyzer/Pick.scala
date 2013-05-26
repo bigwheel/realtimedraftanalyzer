@@ -1,6 +1,6 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
-case class Card(name: String, picked: Boolean = false)
+
 
 case class Pick(packNumber: Int, pickNumber: Int, cards: List[Card]) {
   if (packNumber < 1)
@@ -10,11 +10,4 @@ case class Pick(packNumber: Int, pickNumber: Int, cards: List[Card]) {
     "pickNumber:" + pickNumber + " カードの枚数:" + cards.size)
   if (cards.count(a => a.picked) != 1)
     throw new IllegalArgumentException("pickされたカードが１枚ではありません")
-}
-
-case class PicksOfAPack(expansion: String, picks: List[Pick]) {
-  if (picks.groupBy(_.packNumber).size != 1)
-    throw new IllegalArgumentException("packNumberの値がすべて同じではありません")
-  if (picks.map(_.pickNumber) != Range(1, picks.size + 1).toList)
-    throw new IllegalArgumentException("pickNumberが1~Nで連続ではありません")
 }
