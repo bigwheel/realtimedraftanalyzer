@@ -49,23 +49,26 @@ class DraftScore(path: String) {
   }
   private[this] val blocks = outer(lines)
 
-  val eventNumber = getFirstParam("""Event #: (\d+)""", it.next).toInt
+  val summary = blocks(0)
+  val eventNumber = getFirstParam("""Event #: (\d+)""", summary(0)).toInt
   val date = new SimpleDateFormat(
-    "'Time:    'MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH).parse(it.next)
+    "'Time:    'MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH).parse(summary(1))
 
-
-  val players = if (it.next == "Players: ") {
-    def parsePlayers(it: Iterator[String]): Players = {
-      val recording_player = "^--> (.+)$".r
-      val other_player = "^    (.+)$".r
-      it.next match {
-        case recording_player(name) => Players(name, parsePlayers(it).others)
-        case other_player(name) => parsePlayers(it).appendOtherPlayer(name)
-        case " " => Players()
-        case other => throwIAE(other)
+  val players = if (summary(2) == "Players: ") {
+    def parsePlayers(playerList: List[String]): Players = {
+      if (playerList == Nil)
+        Players()
+      else {
+        val recording_player = "^--> (.+)$".r
+        val other_player = "^    (.+)$".r
+        playerList.head match {
+          case recording_player(name) => Players(name, parsePlayers(playerList.tail).others)
+          case other_player(name) => parsePlayers(playerList.tail).appendOtherPlayer(name)
+          case other => throwIAE(other)
+        }
       }
     }
-    parsePlayers(it)
+    parsePlayers(summary.drop(3))
   } else
     throwIAE()
 
