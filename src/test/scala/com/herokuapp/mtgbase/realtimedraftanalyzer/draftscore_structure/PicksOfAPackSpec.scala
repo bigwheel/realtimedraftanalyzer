@@ -2,13 +2,6 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 
 import org.specs2.mutable.Specification
 
-/**
- * Created with IntelliJ IDEA.
- * User: kbigwheel
- * Date: 13/05/26
- * Time: 22:28
- * To change this template use File | Settings | File Templates.
- */
 class PicksOfAPackSpec extends Specification {
   def dummyCardList(cardNumber: Int): List[Card] = {
     cardNumber match {

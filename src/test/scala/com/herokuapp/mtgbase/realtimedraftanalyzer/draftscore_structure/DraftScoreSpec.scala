@@ -3,8 +3,9 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure
 import org.specs2.mutable.Specification
 import java.util.Calendar
 import com.herokuapp.mtgbase.realtimedraftanalyzer.Players
+import org.specs2.specification.AllExpectations
 
-class DraftScoreSpec extends Specification {
+class DraftScoreSpec extends Specification with AllExpectations {
   val obj = new DraftScore("src/test/resources/sample-pick-score.txt")
 
   "DraftScore" should {
@@ -64,6 +65,17 @@ class DraftScoreSpec extends Specification {
           Card("Forest", picked = true)
         ))
       }
+    }
+
+    "accept partial files" in {
+      new DraftScore(
+        "src/test/resources/partial_samples/test-target_1.txt"
+      ) must not be throwAn[Exception]
+      /*for (i <- Range(1,7)) {
+        new DraftScore(
+          "src/test/resources/partial_samples/test-target_" + i + ".txt"
+        ) must not be throwAn[Exception]
+      }*/
     }
   }
 }
