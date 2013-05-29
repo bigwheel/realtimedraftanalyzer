@@ -27,6 +27,27 @@ class DraftScore(path: String) {
   }
 
   private[this] val it = Source.fromFile(path).getLines // itってミュータブルなんやね
+  private[this] val lines = Source.fromFile(path).getLines.toList
+  private[this] def inner(lines: List[String]): (List[String], List[String]) = {
+    lines match {
+      case Nil => (List.empty[String], List.empty[String])
+      case " "::xs => (List.empty[String], xs)
+      case x::xs => {
+        val (block, restList) = inner(xs)
+        (x::block, restList)
+      }
+    }
+  }
+  private[this] def outer(lines: List[String]): List[List[String]] = {
+    lines match {
+      case Nil => List.empty[List[String]]
+      case _ => {
+        val (block, restList) = inner(lines)
+        block::outer(restList)
+      }
+    }
+  }
+  private[this] val blocks = outer(lines)
 
   val eventNumber = getFirstParam("""Event #: (\d+)""", it.next).toInt
   val date = new SimpleDateFormat(
