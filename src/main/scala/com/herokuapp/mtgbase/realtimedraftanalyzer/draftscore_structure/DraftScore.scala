@@ -26,7 +26,6 @@ class DraftScore(path: String) {
     getParam(regex, destination).group(1)
   }
 
-  private[this] val it = Source.fromFile(path).getLines // itってミュータブルなんやね
   private[this] val lines = Source.fromFile(path).getLines.toList
   private[this] def inner(lines: List[String]): (List[String], List[String]) = {
     lines match {
@@ -49,7 +48,7 @@ class DraftScore(path: String) {
   }
   private[this] val blocks = outer(lines)
 
-  val summary = blocks(0)
+  private[this] val summary = blocks(0)
   val eventNumber = getFirstParam("""Event #: (\d+)""", summary(0)).toInt
   val date = new SimpleDateFormat(
     "'Time:    'MM/dd/yyyy hh:mm:ss a", Locale.ENGLISH).parse(summary(1))
@@ -72,27 +71,39 @@ class DraftScore(path: String) {
   } else
     throwIAE()
 
+  private[this] val blockI = blocks.drop(1).iterator
+
   private[this] def parseAPick(it: Iterator[String]): Pick = {
     val g = getParam("""^Pack (\d+) pick (\d+):""", it.next)
     val (packNumber, pickNumber) = (g.group(1).toInt, g.group(2).toInt)
 
     def parseCards(it: Iterator[String]): List[Card] = {
-      val picked_card = "^--> (.+)$".r
-      val other_card = "^    (.+)$".r
-      it.next match {
-        case picked_card(card_name) => Card(card_name, true)::parseCards(it)
-        case other_card(card_name) => Card(card_name, false)::parseCards(it)
-        case " " => List.empty[Card]
-        case other => throwIAE(other)
-      }
+      if (it.hasNext) {
+        val picked_card = "^--> (.+)$".r
+        val other_card = "^    (.+)$".r
+        it.next match {
+          case picked_card(card_name) => Card(card_name, true)::parseCards(it)
+          case other_card(card_name) => Card(card_name, false)::parseCards(it)
+          case other => throwIAE(other)
+        }
+      } else
+        List.empty[Card]
     }
     Pick(packNumber, pickNumber, parseCards(it))
   }
 
-  val packs = (1 to 3).map(_ => {
-    val boosterPackName = getFirstParam("^------ (.+) ------$", it.next)
-    it.next // 空行を読み捨て
-    PicksOfAPack(boosterPackName, (1 to 15).map(_ => parseAPick(it)).toList)
-  })
-  println(packs(0))
+  private[this] def parsePicks(i: Iterator[List[String]], maxRestCount: Int): List[Pick] = {
+    if (maxRestCount == 0 || !i.hasNext)
+      List.empty[Pick]
+    else
+      parseAPick(i.next.iterator) :: parsePicks(i, maxRestCount - 1)
+  }
+
+  var packs = List.empty[PicksOfAPack]
+  while (blockI.hasNext) {
+    val packName = blockI.next
+    val boosterPackName = getFirstParam("^------ (.+) ------$", packName(0))
+    packs = PicksOfAPack(boosterPackName, parsePicks(blockI, 15)) :: packs
+  }
+  packs = packs.reverse
 }

@@ -68,14 +68,11 @@ class DraftScoreSpec extends Specification with AllExpectations {
     }
 
     "accept partial files" in {
-      new DraftScore(
-        "src/test/resources/partial_samples/test-target_1.txt"
-      ) must not be throwAn[Exception]
-      /*for (i <- Range(1,7)) {
+      for (i <- Range(1,7)) {
         new DraftScore(
           "src/test/resources/partial_samples/test-target_" + i + ".txt"
         ) must not be throwAn[Exception]
-      }*/
+      }
     }
   }
 }
