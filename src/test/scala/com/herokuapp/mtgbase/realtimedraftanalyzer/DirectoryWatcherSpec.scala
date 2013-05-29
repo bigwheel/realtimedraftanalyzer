@@ -9,20 +9,20 @@ import scala.collection.mutable
 
 class DirectoryWatcherSpec extends Specification {
   "FileChangeSimulator" should {
-    "test" in {
+    "be able to create DraftScore object in always" in {
       new FileChangeSimulator("src/test/resources/test-target.txt",
         "src/test/resources/sample-pick-score.txt", 1000)
 
       val actorSet = new mutable.HashSet[Actor]
-      actorSet.foreach(_ ! 'ファイルが更新されましたよシグナル)
-      actorSet.retain(_.getState != Actor.State.Terminated)
 
       new DirectoryWatcher("src/test/resources/",
         (event: WatchEvent[Path], fullpath: Path) => {
+          actorSet.foreach(_ ! 'ファイルが更新されましたよシグナル)
+          actorSet.retain(_.getState != Actor.State.Terminated)
           val a = actor {
             reactWithin(500) {
               case actors.TIMEOUT => {
-                //new DraftScore(fullpath.toString)
+                new DraftScore(fullpath.toString)
                 println("created")
               }
               case 'ファイルが更新されましたよシグナル => exit
