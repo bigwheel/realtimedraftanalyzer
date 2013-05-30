@@ -8,9 +8,9 @@ class ImageUrlFromSearchSpec extends Specification with AllExpectations {
     def url(id: String) =
       "http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=" + id + "&type=card"
     val validPairs = List(("Horncaller's Chant", url("253536")),
-      ("Goblin Electromancer", url("338414")),
+      ("Goblin Electromancer", url("253548")),
       ("Nivmagus Elemental", url("290526")),
-      ("Æther Adept", url("227222"))
+      ("Æther Adept", url("205020"))
     )
 
     "return valid Image Url When valid name given" in {
@@ -19,7 +19,7 @@ class ImageUrlFromSearchSpec extends Specification with AllExpectations {
     }
 
     "return None When invalid name given" in {
-      pending
+      ImageUrlFromSearch("MacGuffin") must_== None
     }
   }
 }
