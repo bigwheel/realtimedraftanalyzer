@@ -1,11 +1,79 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
-import scala.swing.{MainFrame, SimpleSwingApplication}
+import scala.swing.{EditorPane, Dialog, MainFrame, SimpleSwingApplication}
 import java.awt.Dimension
+import java.nio.file.{StandardWatchEventKinds, WatchEvent, Path}
+import scala.actors.Actor
+import scala.actors.Actor._
+import scala.collection.mutable
+import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.{Card, Pick, DraftScore}
 
 object App extends SimpleSwingApplication {
+  private[this] var directoryPath: String = ""
+  Dialog.showInput(message="ピック譜が置かれるディレクトリを入力してください",
+    initial="src/test/resources/") match {
+    case None => this.quit
+    case Some(directoryPath) => this.directoryPath = directoryPath
+  }
+
+  // テストでおいてるだけなのできちんと削除すること
+  new FileChangeSimulator("src/test/resources/test-target.txt",
+    "src/test/resources/sample-pick-score.txt", 1000)
+
+  val editorPane = new EditorPane()
+  editorPane.contentType = "text/html"
+  editorPane.editable = false
+  val putter = actor {
+    loop {
+      react {
+        case draftScore: DraftScore => {
+          def getLastPickCards(draftScore: DraftScore): Option[Pick] = {
+            val packs = draftScore.packs
+            if (packs.size == 0)
+              None
+            else if (packs.last.picks.size != 0)
+              Some(packs.last.picks.last)
+            else if (packs.size == 1)
+              None
+            else
+              Some(packs(packs.size - 2).picks.last)
+          }
+
+          getLastPickCards(draftScore) match {
+            case None => editorPane.text = ""
+            case Some(pick) => {
+              editorPane.text = pick.cards.map( (card : Card) =>
+                "<img src=\"" + ImageUrlFromSearch(card.name).get  + "\" >").mkString
+            }
+          }
+          //
+        }
+      }
+    }
+  }
+
+  val actorSet = new mutable.HashSet[Actor]
+
+  new DirectoryWatcher(directoryPath, (event: WatchEvent[Path], fullpath: Path) => {
+    if (event.kind == StandardWatchEventKinds.ENTRY_MODIFY) {
+      actorSet.foreach(_ ! 'ファイルが更新されましたよシグナル)
+      actorSet.retain(_.getState != Actor.State.Terminated)
+      val a = actor {
+        reactWithin(500) {
+          case actors.TIMEOUT => {
+            putter ! new DraftScore(fullpath.toString)
+          }
+          case 'ファイルが更新されましたよシグナル => exit
+        }
+      }
+      actorSet.add(a)
+    }
+    event.kind != StandardWatchEventKinds.ENTRY_DELETE
+  })
+
   def top = new MainFrame {
-    title = "Window Title"
-    minimumSize = new Dimension(300, 200)
+    title = directoryPath
+    minimumSize = new Dimension(1000, 800)
+    contents = editorPane
   }
 }
