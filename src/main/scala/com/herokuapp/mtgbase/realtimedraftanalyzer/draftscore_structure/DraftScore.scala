@@ -79,8 +79,8 @@ class DraftScore(path: String) {
 
     def parseCards(it: Iterator[String]): List[Card] = {
       if (it.hasNext) {
-        val picked_card = "^--> (.+)$".r
-        val other_card = "^    (.+)$".r
+        val picked_card = "^--> (.+?)(?: \\(FOIL\\))?$".r
+        val other_card = "^    (.+?)(?: \\(FOIL\\))?$".r
         it.next match {
           case picked_card(card_name) => Card(card_name, true)::parseCards(it)
           case other_card(card_name) => Card(card_name, false)::parseCards(it)

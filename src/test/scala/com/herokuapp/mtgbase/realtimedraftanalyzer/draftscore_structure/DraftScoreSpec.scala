@@ -74,5 +74,9 @@ class DraftScoreSpec extends Specification with AllExpectations {
         ) must not be throwAn[Exception]
       }
     }
+
+    "delete FOIL infomation from card name" in {
+      obj.packs(1).picks(1).cards(4) must_== Card("Nivmagus Elemental")
+    }
   }
 }
