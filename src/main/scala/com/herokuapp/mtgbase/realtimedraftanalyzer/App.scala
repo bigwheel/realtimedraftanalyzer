@@ -18,7 +18,7 @@ object App extends SimpleSwingApplication {
 
   // テストでおいてるだけなのできちんと削除すること
   new FileChangeSimulator("src/test/resources/test-target.txt",
-    "src/test/resources/sample-pick-score.txt", 1000)
+    "src/test/resources/sample-pick-score.txt", 10000)
 
   val editorPane = new EditorPane()
   editorPane.contentType = "text/html"
@@ -43,7 +43,9 @@ object App extends SimpleSwingApplication {
             case None => editorPane.text = ""
             case Some(pick) => {
               editorPane.text = pick.cards.map( (card : Card) =>
-                "<img src=\"" + ImageUrlFromSearch(card.name).get  + "\" >").mkString
+                "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
+                  ImageUrlFromSearch(card.name).get  + "\" >").mkString
+              editorPane.repaint
             }
           }
           //
