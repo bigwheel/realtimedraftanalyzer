@@ -44,7 +44,8 @@ object App extends SimpleSwingApplication {
             case Some(pick) => {
               editorPane.text = pick.cards.map( (card : Card) =>
                 "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
-                  ImageUrlFromSearch(card.name).get  + "\" >").mkString
+                  ImageUrlFromSearch(card.name).get  + "\" >"
+              ).grouped(5).toList.map(_.mkString).mkString("<BR>")
               editorPane.repaint
             }
           }
@@ -75,7 +76,7 @@ object App extends SimpleSwingApplication {
 
   def top = new MainFrame {
     title = directoryPath
-    minimumSize = new Dimension(1000, 800)
+    minimumSize = new Dimension(1150, 980)
     contents = editorPane
   }
 }
