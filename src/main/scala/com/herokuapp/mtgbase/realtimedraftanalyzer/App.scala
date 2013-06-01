@@ -13,7 +13,7 @@ object App extends SimpleSwingApplication {
   Dialog.showInput(message="ピック譜が置かれるディレクトリを入力してください",
     initial="src/test/resources/") match {
     case None => this.quit
-    case Some(directoryPath) => this.directoryPath = directoryPath
+    case Some(path) => this.directoryPath = path
   }
 
   // テストでおいてるだけなのできちんと削除すること
