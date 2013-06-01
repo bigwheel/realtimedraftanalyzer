@@ -5,12 +5,22 @@ import java.net.URLEncoder
 import scala.util.parsing.json.JSON
 
 object ImageUrlFromSearch {
-  def apply(cardName: String/*, expansionAcronym: String*/): Option[String] = {
+  def apply(cardName: String, expansionCode: String = ""): Option[String] = {
     val encordedCardName = URLEncoder.encode(cardName, "UTF-8")
-    //val encordedExpansionName = URLEncoder.encode("Return to Ravnica", "UTF-8")
+    val expansionName: Option[String] = if (expansionCode == "")
+      None
+    else {
+      try {
+        val response = Source.fromURL("http://mtgbase.herokuapp.com" +
+          "/expansion_code_to_fullname?code=" + expansionCode)
+        Some(response.getLines.mkString)
+      } catch {
+        case _ => None
+      }
+    }
     val resultString = Source.fromURL(
-      "http://mtgbase.herokuapp.com/search?card_name=" + encordedCardName/* +
-        "&expansion=" + encordedExpansionName*/).
+      "http://mtgbase.herokuapp.com/search?card_name=" + encordedCardName +
+        (if (expansionName == None) "" else "&expansion=" + URLEncoder.encode(expansionName.get, "UTF-8"))).
       getLines.mkString
     val resultJson = JSON.parseFull(resultString)
     val resultList = resultJson.get.asInstanceOf[List[Any]]

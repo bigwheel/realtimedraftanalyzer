@@ -44,7 +44,7 @@ object App extends SimpleSwingApplication {
             case Some(pick) => {
               editorPane.text = pick.cards.map( (card : Card) =>
                 "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
-                  ImageUrlFromSearch(card.name).get  + "\" >"
+                  ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get  + "\" >"
               ).grouped(5).toList.map(_.mkString).mkString("<BR>")
               editorPane.repaint
             }
