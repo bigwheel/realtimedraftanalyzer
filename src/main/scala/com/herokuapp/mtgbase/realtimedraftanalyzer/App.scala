@@ -1,12 +1,16 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
-import scala.swing.{EditorPane, Dialog, MainFrame, SimpleSwingApplication}
+import scala.swing._
 import java.awt.Dimension
 import java.nio.file.{StandardWatchEventKinds, WatchEvent, Path}
 import scala.actors.Actor
 import scala.actors.Actor._
 import scala.collection.mutable
-import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.{Card, Pick, DraftScore}
+import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.DraftScore
+import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.Pick
+import scala.Some
+import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.Card
+import scala.swing.TabbedPane.Page
 
 object App extends SimpleSwingApplication {
   private[this] var directoryPath: String = ""
@@ -76,7 +80,9 @@ object App extends SimpleSwingApplication {
 
   def top = new MainFrame {
     title = directoryPath
-    minimumSize = new Dimension(1150, 980)
-    contents = editorPane
+    minimumSize = new Dimension(1150, 1000)
+    val tabbedPane = new TabbedPane
+    tabbedPane.pages += new Page("1-1", editorPane)
+    contents = tabbedPane
   }
 }
