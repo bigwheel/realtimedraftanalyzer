@@ -69,9 +69,12 @@ object App extends SimpleSwingApplication {
                   val body = <img width="223" height="310" alt={card.name} src={imageUrl} />
                   document.insertBeforeEnd(bodyElement, body.toString)
                   editorPane.editable = false
-                  editorPane.background = if (pick.cards.find(_.name == card.name) == None)
-                    Color.GRAY
-                  else if(pick.cards.find(_.name == card.name).get.picked)
+                  editorPane.background = if (pick.cards.find(_.name == card.name) == None) {
+                    if (card.picked)
+                      Color.PINK
+                    else
+                      Color.GRAY
+                  } else if(pick.cards.find(_.name == card.name).get.picked)
                     Color.RED
                   else
                     Color.WHITE
