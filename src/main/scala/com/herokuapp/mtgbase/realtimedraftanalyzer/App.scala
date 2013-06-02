@@ -24,9 +24,7 @@ object App extends SimpleSwingApplication {
   new FileChangeSimulator("src/test/resources/test-target.txt",
     "src/test/resources/sample-pick-score.txt", 10000)
 
-  val editorPane = new EditorPane()
-  editorPane.contentType = "text/html"
-  editorPane.editable = false
+  val tabbedPane = new TabbedPane
   val putter = actor {
     loop {
       react {
@@ -44,13 +42,19 @@ object App extends SimpleSwingApplication {
           }
 
           getLastPickCards(draftScore) match {
-            case None => editorPane.text = ""
+            case None => ()
             case Some(pick) => {
+              tabbedPane.pages
+              val editorPane = new EditorPane
+              editorPane.contentType = "text/html"
+              editorPane.editable = false
+              tabbedPane.pages += new Page(pick.packNumber + "-" + pick.pickNumber, editorPane)
+
               editorPane.text = pick.cards.map( (card : Card) =>
                 "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
                   ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get  + "\" >"
               ).grouped(5).toList.map(_.mkString).mkString("<BR>")
-              editorPane.repaint
+              tabbedPane.repaint
             }
           }
           //
@@ -81,8 +85,6 @@ object App extends SimpleSwingApplication {
   def top = new MainFrame {
     title = directoryPath
     minimumSize = new Dimension(1150, 1000)
-    val tabbedPane = new TabbedPane
-    tabbedPane.pages += new Page("1-1", editorPane)
     contents = tabbedPane
   }
 }
