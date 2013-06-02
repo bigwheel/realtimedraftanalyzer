@@ -30,26 +30,32 @@ object App extends SimpleSwingApplication {
     loop {
       react {
         case draftScore: DraftScore => {
-          def getLastPickCards(draftScore: DraftScore): Option[Pick] = {
+          def getLastAnd8beforePickCards(draftScore: DraftScore): Option[(Pick, Option[Pick])] = {
             val packs = draftScore.packs
             if (packs.size == 0)
               None
-            else if (packs.last.picks.size != 0)
-              Some(packs.last.picks.last)
-            else if (packs.size == 1)
-              None
-            else
-              Some(packs(packs.size - 2).picks.last)
+            else {
+              val pack = if (packs.last.picks.size != 0)
+                packs.last
+              else if (packs.size == 1)
+                return None
+              else
+                packs(packs.size - 2)
+              Some(pack.picks.last, if (9 <= pack.picks.size)
+                Some(pack.picks(pack.picks.size - 1 - 8)) else None)
+            }
           }
 
-          getLastPickCards(draftScore) match {
+          getLastAnd8beforePickCards(draftScore) match {
             case None => ()
-            case Some(pick) => {
+            case Some((pick, _8beforePick: Option[Pick])) => {
               def tabTitle(pick: Pick): String = pick.packNumber + "-" + pick.pickNumber
+
               if (tabbedPane.pages.find(_.title == tabTitle(pick)) == None) {
                 val gridPanel = new GridPanel(3, 5)
 
-                val editorPanes = pick.cards.map((card: Card) => {
+                val shouldRenderedPick = if (_8beforePick == None) pick else _8beforePick.get
+                val editorPanes = shouldRenderedPick.cards.map((card: Card) => {
                   val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
                   val editorPane = new EditorPane("text/html",
                     <html>
@@ -63,7 +69,13 @@ object App extends SimpleSwingApplication {
                   val body = <img width="223" height="310" alt={card.name} src={imageUrl} />
                   document.insertBeforeEnd(bodyElement, body.toString)
                   editorPane.editable = false
-                  editorPane.background = if(card.picked) Color.RED else Color.WHITE
+                  editorPane.background = if (pick.cards.find(_.name == card.name) == None)
+                    Color.GRAY
+                  else if(pick.cards.find(_.name == card.name).get.picked)
+                    Color.RED
+                  else
+                    Color.WHITE
+
                   editorPane
                 })
                 editorPanes.foreach(gridPanel.contents += _)
