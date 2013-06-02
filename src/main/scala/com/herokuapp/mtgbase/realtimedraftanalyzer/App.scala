@@ -1,7 +1,7 @@
 package com.herokuapp.mtgbase.realtimedraftanalyzer
 
 import scala.swing._
-import java.awt.Dimension
+import java.awt.{Color, Dimension}
 import java.nio.file.{StandardWatchEventKinds, WatchEvent, Path}
 import scala.actors.Actor
 import scala.actors.Actor._
@@ -47,25 +47,28 @@ object App extends SimpleSwingApplication {
             case Some(pick) => {
               def tabTitle(pick: Pick): String = pick.packNumber + "-" + pick.pickNumber
               if (tabbedPane.pages.find(_.title == tabTitle(pick)) == None) {
-                val body = pick.cards.map( (card : Card) => {
+                val gridPanel = new GridPanel(3, 5)
+
+                val editorPanes = pick.cards.map((card: Card) => {
                   val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
-                  <img width="223" height="310" alt={card.name} src={imageUrl} />
-                }).grouped(5).toList.map(_.mkString).mkString("<BR />")
+                  val editorPane = new EditorPane("text/html",
+                    <html>
+                      <head>
+                      </head>
+                      <body id="body"></body>
+                    </html>
+                      .toString)
+                  val document = editorPane.peer.getDocument.asInstanceOf[HTMLDocument]
+                  val bodyElement = document.getElement("body")
+                  val body = <img width="223" height="310" alt={card.name} src={imageUrl} />
+                  document.insertBeforeEnd(bodyElement, body.toString)
+                  editorPane.editable = false
+                  editorPane.background = if(card.picked) Color.RED else Color.WHITE
+                  editorPane
+                })
+                editorPanes.foreach(gridPanel.contents += _)
 
-                val editorPane = new EditorPane("text/html",
-                  <html>
-                    <head>
-                      <style type="text/css">{""".header { border-style: solid; float: left; position: absolute;}"""}</style>
-                    </head>
-                    <body id="body"></body>
-                  </html>
-                    .toString)
-                val document = editorPane.peer.getDocument.asInstanceOf[HTMLDocument]
-                val bodyElement = document.getElement("body")
-                document.insertBeforeEnd(bodyElement, body)
-                editorPane.editable = false
-
-                tabbedPane.pages += new Page(tabTitle(pick), editorPane)
+                tabbedPane.pages += new Page(tabTitle(pick), gridPanel)
                 tabbedPane.selection.page = tabbedPane.pages.last
                 tabbedPane.repaint
               }
