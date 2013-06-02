@@ -3,9 +3,15 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer
 import scala.io.Source
 import java.net.URLEncoder
 import scala.util.parsing.json.JSON
+import scala.collection.mutable
 
 object ImageUrlFromSearch {
+  private[this] val cache = mutable.Map.empty[(String, String), Option[String]]
   def apply(cardName: String, expansionCode: String = ""): Option[String] = {
+    cache.getOrElseUpdate((cardName, expansionCode), getUrl(cardName, expansionCode))
+  }
+
+  private[this] def getUrl(cardName: String, expansionCode: String = ""): Option[String] = {
     val encordedCardName = URLEncoder.encode(cardName, "UTF-8")
     val expansionName: Option[String] = if (expansionCode == "")
       None

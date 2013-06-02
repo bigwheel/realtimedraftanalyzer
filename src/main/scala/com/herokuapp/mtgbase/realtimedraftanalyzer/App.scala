@@ -44,16 +44,17 @@ object App extends SimpleSwingApplication {
           getLastPickCards(draftScore) match {
             case None => ()
             case Some(pick) => {
-              tabbedPane.pages
+              //tabbedPane.pages.clear
               val editorPane = new EditorPane
               editorPane.contentType = "text/html"
               editorPane.editable = false
               tabbedPane.pages += new Page(pick.packNumber + "-" + pick.pickNumber, editorPane)
 
-              editorPane.text = pick.cards.map( (card : Card) =>
+              editorPane.text = pick.cards.map( (card : Card) => {
+                val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
                 "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
-                  ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get  + "\" >"
-              ).grouped(5).toList.map(_.mkString).mkString("<BR>")
+                  imageUrl  + "\" >"
+              }).grouped(5).toList.map(_.mkString).mkString("<BR>")
               tabbedPane.repaint
             }
           }
