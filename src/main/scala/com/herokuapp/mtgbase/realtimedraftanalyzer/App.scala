@@ -44,21 +44,24 @@ object App extends SimpleSwingApplication {
           getLastPickCards(draftScore) match {
             case None => ()
             case Some(pick) => {
-              //tabbedPane.pages.clear
-              val editorPane = new EditorPane
-              editorPane.contentType = "text/html"
-              editorPane.editable = false
-              tabbedPane.pages += new Page(pick.packNumber + "-" + pick.pickNumber, editorPane)
+              def tabTitle(pick: Pick): String = pick.packNumber + "-" + pick.pickNumber
+              if (tabbedPane.pages.find(_.title == tabTitle(pick)) == None) {
+                val editorPane = new EditorPane
+                editorPane.contentType = "text/html"
+                editorPane.editable = false
 
-              editorPane.text = pick.cards.map( (card : Card) => {
-                val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
-                "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
-                  imageUrl  + "\" >"
-              }).grouped(5).toList.map(_.mkString).mkString("<BR>")
-              tabbedPane.repaint
+                editorPane.text = pick.cards.map( (card : Card) => {
+                  val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
+                  "<img width=223 height=310 alt=\"" + card.name + "\" src=\"" +
+                    imageUrl  + "\" >"
+                }).grouped(5).toList.map(_.mkString).mkString("<BR>")
+
+                tabbedPane.pages += new Page(tabTitle(pick), editorPane)
+                tabbedPane.selection.page = tabbedPane.pages.last
+                tabbedPane.repaint
+              }
             }
           }
-          //
         }
       }
     }
