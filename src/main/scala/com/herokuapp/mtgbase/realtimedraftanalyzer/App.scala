@@ -12,6 +12,7 @@ import scala.Some
 import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.Card
 import scala.swing.TabbedPane.Page
 import javax.swing.text.html.HTMLDocument
+import scala.swing.event.MouseWheelMoved
 
 object App extends SimpleSwingApplication {
   private[this] var directoryPath: String = ""
@@ -25,7 +26,13 @@ object App extends SimpleSwingApplication {
   new FileChangeSimulator("src/test/resources/test-target.txt",
     "src/test/resources/sample-pick-score.txt", 10000)
 
-  val tabbedPane = new TabbedPane
+  val tabbedPane = new TabbedPane {
+    listenTo(this.mouse.wheel)
+    reactions += {
+      case MouseWheelMoved(_, _, _, rotation) => selection.index =
+        (selection.index + rotation + pages.size) % pages.size
+    }
+  }
   val putter = actor {
     loop {
       react {
