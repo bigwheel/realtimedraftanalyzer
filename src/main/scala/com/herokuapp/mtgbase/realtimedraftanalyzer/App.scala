@@ -84,7 +84,10 @@ object App extends SimpleSwingApplication {
                 editorPanes.foreach(gridPanel.contents += _)
 
                 tabbedPane.pages += new Page(tabTitle(pick), gridPanel)
-                tabbedPane.selection.page = tabbedPane.pages.last
+                tabbedPane.selection.page = if (8 <= pick.pickNumber)
+                  tabbedPane.pages(tabbedPane.pages.size - 8)
+                else
+                  tabbedPane.pages.last
                 tabbedPane.repaint
               }
             }
