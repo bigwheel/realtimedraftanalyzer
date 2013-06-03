@@ -23,8 +23,8 @@ object App extends SimpleSwingApplication {
   }
 
   // テストでおいてるだけなのできちんと削除すること
-  new FileChangeSimulator("src/test/resources/test-target.txt",
-    "src/test/resources/sample-pick-score.txt", 10000)
+  //new FileChangeSimulator("src/test/resources/test-target.txt",
+  //  "src/test/resources/sample-pick-score.txt", 10000)
 
   val tabbedPane = new TabbedPane {
     listenTo(this.mouse.wheel)
