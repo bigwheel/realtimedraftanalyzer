@@ -2,10 +2,7 @@ package com.herokuapp.mtgbase.realtimedraftanalyzer
 
 import scala.swing._
 import java.awt.{Color, Dimension}
-import java.nio.file.{StandardWatchEventKinds, WatchEvent, Path}
-import scala.actors.Actor
 import scala.actors.Actor._
-import scala.collection.mutable
 import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.DraftScore
 import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.Pick
 import scala.Some
@@ -15,16 +12,16 @@ import javax.swing.text.html.HTMLDocument
 import scala.swing.event.MouseWheelMoved
 
 object App extends SimpleSwingApplication {
-  private[this] var directoryPath: String = ""
-  Dialog.showInput(message="ピック譜が置かれるディレクトリを入力してください",
-    initial="src/test/resources/") match {
-    case None => this.quit
-    case Some(path) => this.directoryPath = path
-  }
-
   // テストでおいてるだけなのできちんと削除すること
   //new FileChangeSimulator("src/test/resources/test-target.txt",
-  //  "src/test/resources/sample-pick-score.txt", 10000)
+  //  "src/test/resources/sample-pick-score.txt", 1000)
+
+  private[this] var filePath: String = ""
+  Dialog.showInput(message="ピック譜ファイルのパスを入力してください",
+    initial="src/test/resources/test-target.txt") match {
+    case None => this.quit
+    case Some(path) => this.filePath = path
+  }
 
   val tabbedPane = new TabbedPane {
     listenTo(this.mouse.wheel)
@@ -104,27 +101,13 @@ object App extends SimpleSwingApplication {
     }
   }
 
-  val actorSet = new mutable.HashSet[Actor]
-
-  new DirectoryWatcher(directoryPath, (event: WatchEvent[Path], fullpath: Path) => {
-    if (event.kind == StandardWatchEventKinds.ENTRY_MODIFY) {
-      actorSet.foreach(_ ! 'ファイルが更新されましたよシグナル)
-      actorSet.retain(_.getState != Actor.State.Terminated)
-      val a = actor {
-        reactWithin(500) {
-          case actors.TIMEOUT => {
-            putter ! new DraftScore(fullpath.toString)
-          }
-          case 'ファイルが更新されましたよシグナル => exit
-        }
-      }
-      actorSet.add(a)
-    }
-    event.kind != StandardWatchEventKinds.ENTRY_DELETE
+  new FileWatcher(filePath, (_: Unit) => {
+    println("test")
+    putter ! new DraftScore(filePath)
   })
 
   def top = new MainFrame {
-    title = directoryPath
+    title = filePath
     minimumSize = new Dimension(1150, 1000)
     contents = tabbedPane
   }
