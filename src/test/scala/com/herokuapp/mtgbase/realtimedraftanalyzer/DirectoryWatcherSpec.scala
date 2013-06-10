@@ -10,7 +10,7 @@ import scala.collection.mutable
 class DirectoryWatcherSpec extends Specification {
   "FileChangeSimulator" should {
     "be able to create DraftScore object in always" in {
-      new FileChangeSimulator("src/test/resources/test-target.txt",
+      val fcs = new FileChangeSimulator("src/test/resources/test-target.txt",
         "src/test/resources/sample-pick-score.txt", 1000)
 
       val actorSet = new mutable.HashSet[Actor]
@@ -31,7 +31,11 @@ class DirectoryWatcherSpec extends Specification {
           actorSet.add(a)
           event.kind != StandardWatchEventKinds.ENTRY_DELETE
         }
-      ) must not be throwA[Exception]
+      )
+
+      while (fcs.process.getState != Actor.State.Terminated) {
+        Thread.sleep(1000)
+      } must not be throwA[Exception]
     }
   }
 }

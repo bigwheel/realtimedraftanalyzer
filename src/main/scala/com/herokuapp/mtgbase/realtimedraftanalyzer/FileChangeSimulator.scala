@@ -5,7 +5,7 @@ import java.io.{PrintWriter, File}
 import scala.actors.Actor
 
 class FileChangeSimulator(source: String, dest: String, waitTime: Long) {
-  Actor.actor {
+  val process = Actor.actor {
     deleteFileIfExist(source)
 
     val samplePickScore = Source.fromFile(dest)
@@ -14,7 +14,7 @@ class FileChangeSimulator(source: String, dest: String, waitTime: Long) {
       out.println(line)
 
       if (line.matches("\\s*")) {
-        out.flush()
+        out.flush
 
         Thread.sleep(waitTime)
       }
