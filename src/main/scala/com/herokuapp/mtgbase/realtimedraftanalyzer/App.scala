@@ -14,7 +14,7 @@ import scala.swing.event.MouseWheelMoved
 object App extends SimpleSwingApplication {
   // テストでおいてるだけなのできちんと削除すること
   //new FileChangeSimulator("src/test/resources/test-target.txt",
-  //  "src/test/resources/sample-pick-score.txt", 1000)
+  //  "src/test/resources/sample-pick-score.txt", 10000)
 
   private[this] var filePath: String = ""
   Dialog.showInput(message="ピック譜ファイルのパスを入力してください",
@@ -89,7 +89,7 @@ object App extends SimpleSwingApplication {
 
                 tabbedPane.pages += new Page(tabTitle(pick), gridPanel)
                 tabbedPane.selection.page = if (8 <= pick.pickNumber)
-                  tabbedPane.pages(tabbedPane.pages.size - 8)
+                  tabbedPane.pages(math.abs(tabbedPane.pages.size - 8))
                 else
                   tabbedPane.pages.last
                 tabbedPane.repaint
@@ -102,7 +102,6 @@ object App extends SimpleSwingApplication {
   }
 
   new FileWatcher(filePath, (_: Unit) => {
-    println("test")
     putter ! new DraftScore(filePath)
   })
 
