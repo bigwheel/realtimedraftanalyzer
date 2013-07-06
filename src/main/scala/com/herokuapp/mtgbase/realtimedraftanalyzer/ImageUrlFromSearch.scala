@@ -12,7 +12,12 @@ object ImageUrlFromSearch {
   }
 
   private[this] def getUrl(cardName: String, expansionCode: String = ""): Option[String] = {
-    val encordedCardName = URLEncoder.encode(cardName, "UTF-8")
+    // 両面カードや分割カードは片方のカード名で検索しないと正しく検索できないため
+    val cardnameForSearch = if (cardName.contains("/"))
+      cardName.take(cardName.indexOf("/"))
+    else
+      cardName
+    val encordedCardName = URLEncoder.encode(cardnameForSearch, "UTF-8")
     val expansionName: Option[String] = if (expansionCode == "")
       None
     else {

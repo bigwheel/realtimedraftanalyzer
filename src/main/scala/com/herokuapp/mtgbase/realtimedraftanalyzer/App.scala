@@ -13,8 +13,8 @@ import scala.swing.event.MouseWheelMoved
 
 object App extends SimpleSwingApplication {
   // テストでおいてるだけなのできちんと削除すること
-  //new FileChangeSimulator("src/test/resources/test-target.txt",
-  //  "src/test/resources/sample-pick-score.txt", 10000)
+  new FileChangeSimulator("src/test/resources/test-target.txt",
+    "src/test/resources/sample-pick-score.txt", 10000)
 
   private[this] var filePath: String = ""
   Dialog.showInput(message="ピック譜ファイルのパスを入力してください",
@@ -60,7 +60,10 @@ object App extends SimpleSwingApplication {
 
                 val shouldRenderedPick = if (_8beforePick == None) pick else _8beforePick.get
                 val editorPanes = shouldRenderedPick.cards.map((card: Card) => {
-                  val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion).get
+                  val imageUrl = ImageUrlFromSearch(card.name, draftScore.packs(pick.packNumber - 1).expansion) match {
+                    case None => "http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=145765"
+                    case Some(a) => a
+                  }
                   val editorPane = new EditorPane("text/html",
                     <html>
                       <head>
