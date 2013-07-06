@@ -10,17 +10,24 @@ import com.herokuapp.mtgbase.realtimedraftanalyzer.draftscore_structure.Card
 import scala.swing.TabbedPane.Page
 import javax.swing.text.html.HTMLDocument
 import scala.swing.event.MouseWheelMoved
+import javax.swing.filechooser.FileNameExtensionFilter
 
 object App extends SimpleSwingApplication {
-  // テストでおいてるだけなのできちんと削除すること
-  new FileChangeSimulator("src/test/resources/test-target.txt",
-    "src/test/resources/sample-pick-score.txt", 10000)
-
+  private[this] def getFileChooser = {
+    new FileChooser() {
+      fileFilter = new FileNameExtensionFilter("ドラフトピック譜", "txt")
+    }
+  }
+  val fileChooser = getFileChooser
+  fileChooser.title = "ファイルを選択する"
   private[this] var filePath: String = ""
-  Dialog.showInput(message="ピック譜ファイルのパスを入力してください",
-    initial="src/test/resources/test-target.txt") match {
-    case None => this.quit
-    case Some(path) => this.filePath = path
+  fileChooser.showOpenDialog(null) match {
+    case FileChooser.Result.Approve =>
+      if (fileChooser.selectedFile.exists)
+        this.filePath = fileChooser.selectedFile.toPath().toString()
+      else
+        this.quit
+    case _ => this.quit
   }
 
   val tabbedPane = new TabbedPane {
