@@ -26,7 +26,7 @@ object ImageUrlFromSearch {
           "/expansion_code_to_fullname?code=" + expansionCode)
         Some(response.getLines.mkString)
       } catch {
-        case _ => None
+        case _: Throwable => None
       }
     }
     val resultString = Source.fromURL(
