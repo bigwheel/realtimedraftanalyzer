@@ -5,8 +5,8 @@ MTGO(Magic: the gathering Online)でドラフトをプレイ中に
 
 使用してみただいたいの感じ http://www.nicovideo.jp/watch/sm21010298
 
-ver 0.2のダウンロード
-https://docs.google.com/file/d/0Bx1bwUKdICdQXzE5Ny1UZnk5SnM/edit?usp=sharing
+ver 0.3のダウンロード
+https://docs.google.com/file/d/0Bx1bwUKdICdQR29FZ3VpSTNnT1E/edit?usp=sharing
 
 jarファイルのいい配布方法が思いつかなくてとりあえずgoogle driveにおいてます。
 
