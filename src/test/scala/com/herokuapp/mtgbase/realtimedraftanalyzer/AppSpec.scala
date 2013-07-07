@@ -5,7 +5,6 @@ import org.specs2.mutable._
 class AppSpec extends Specification {
   "App" should {
     "not throw exception in processing sample pick score" in {
-      // テストでおいてるだけなのできちんと削除すること
       new FileChangeSimulator("src/test/resources/test-target.txt",
         "src/test/resources/sample-pick-score.txt", 10000)
 
