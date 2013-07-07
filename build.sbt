@@ -2,7 +2,7 @@ import AssemblyKeys._ // put this at the top of the file
 
 name := "realtimedraftanalyzer"
 
-version := "0.2"
+version := "0.3"
 
 libraryDependencies ++= Seq(
     "org.specs2" %% "specs2" % "1.12.3" % "test",
